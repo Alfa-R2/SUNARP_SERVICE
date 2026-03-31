@@ -1,0 +1,94 @@
+"""
+Module to test the Apoderado functionality of the Sunarp service.
+"""
+
+import pytest
+from pydantic import ValidationError
+
+from sunarp_service.modules.builders.apoderado_builder import ApoderadoBuilder
+
+@pytest.mark.parametrize(
+    "nombre, documento, tipo_documento",
+    [
+        (
+            "JHON DOE",
+            "12345678",
+            "DNI",
+        ),
+    ],
+)
+def test_valid_peruvian_apoderado_natural(
+    nombre,
+    documento,
+    tipo_documento,
+) -> None:
+
+    apoderado_natural = ApoderadoBuilder.make_apoderado_from_dict(
+        {
+            "nombre": nombre,
+            "documento": documento,
+            "tipo_documento": tipo_documento,
+        },
+    )
+
+    print(apoderado_natural)
+
+    assert apoderado_natural.pre_nombres == "-"
+    assert apoderado_natural.primer_apellido == "-"
+    assert apoderado_natural.segundo_apellido == "-"
+    assert apoderado_natural.tipo_participante == "APODERADO"
+
+
+@pytest.mark.parametrize(
+    "nombre, documento, tipo_documento",
+    [
+        (
+            "JHON DOE",
+            "AA123456",
+            "PASAPORTE",
+        ),
+        ("JANE DOE", "P12345678", "PASAPORTE"),
+    ],
+)
+def test_valid_foreign_apoderado_natural(
+    nombre,
+    documento,
+    tipo_documento,
+) -> None:
+
+    apoderado_natural = ApoderadoBuilder.make_apoderado_from_dict(
+        {
+            "nombre": nombre,
+            "documento": documento,
+            "tipo_documento": tipo_documento,
+        },
+    )
+
+    print(apoderado_natural)
+
+    assert apoderado_natural.pre_nombres != "-"
+    assert apoderado_natural.primer_apellido != "-"
+    assert apoderado_natural.segundo_apellido != "-"
+    assert apoderado_natural.tipo_participante == "APODERADO"
+
+
+@pytest.mark.parametrize(
+    "nombre, documento, tipo_documento",
+    [
+        ("JHON DOE", "12345678P", "DOCUMENTO NACIONAL DE IDENTIDAD"),
+    ],
+)
+def test_invalid_apoderado_natural(
+    nombre,
+    documento,
+    tipo_documento,
+) -> None:
+
+    with pytest.raises(ValidationError):
+        ApoderadoBuilder.make_apoderado_from_dict(
+            {
+                "nombre": nombre,
+                "documento": documento,
+                "tipo_documento": tipo_documento,
+            },
+        )

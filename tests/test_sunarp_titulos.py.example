@@ -1,0 +1,17 @@
+import pytest
+
+
+@pytest.mark.parametrize("numero_solicitud", ["12345678"])
+def test_find_titulo_enviado(sunarp_service_logged, numero_solicitud):
+    with sunarp_service_logged.go_to_titulos_enviados() as titulos_enviados_page:
+        result = titulos_enviados_page.find(numero_solicitud)
+
+    assert result is not None
+
+
+@pytest.mark.parametrize("numero_solicitud", ["12345678"])
+def test_find_titulo_observado(sunarp_service_logged, numero_solicitud):
+    with sunarp_service_logged.go_to_titulos_observados() as titulos_observados_page:
+        result = titulos_observados_page.find(numero_solicitud)
+
+    assert result is not None

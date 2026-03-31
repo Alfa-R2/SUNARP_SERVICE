@@ -1,0 +1,43 @@
+from typing import Literal
+
+type Service = Literal[
+    "Solicitud de Bloqueo Registral",
+    "Solicitud de Garantías Mobiliarias",
+    "Solicitud de Inmatriculación Vehicular",
+    "Solicitud de Mandato y poder",
+    "Solicitud de Sucesiones Intestadas",
+    "Solicitud de Testamentos",
+    "Solicitud en el Registro Minero",
+    "Solicitud en el Registro Personal",
+    "Solicitud en el Registro de Aeronaves",
+    "Solicitud en el Registro de Comerciantes",
+    "Solicitud en el Registro de Concesiones",
+    "Solicitud en el Registro de Motores",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Buques)",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Embarcaciones Pesqueras)",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Naves)",
+    "Solicitud en el Registro de Personas Jurídicas",
+    "Solicitud en el Registro de Predios",
+    "Solicitud en el Registro de Propiedad Vehicular",
+]
+
+__servicios__ = (
+    "Solicitud de Bloqueo Registral",
+    "Solicitud de Garantías Mobiliarias",
+    "Solicitud de Inmatriculación Vehicular",
+    "Solicitud de Mandato y poder",
+    "Solicitud de Sucesiones Intestadas",
+    "Solicitud de Testamentos",
+    "Solicitud en el Registro Minero",
+    "Solicitud en el Registro Personal",
+    "Solicitud en el Registro de Aeronaves",
+    "Solicitud en el Registro de Comerciantes",
+    "Solicitud en el Registro de Concesiones",
+    "Solicitud en el Registro de Motores",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Buques)",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Embarcaciones Pesqueras)",
+    "Solicitud en el Registro de Naves y Embarcaciones (antes Registro de Naves)",
+    "Solicitud en el Registro de Personas Jurídicas",
+    "Solicitud en el Registro de Predios",
+    "Solicitud en el Registro de Propiedad Vehicular",
+)

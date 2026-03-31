@@ -1,0 +1,112 @@
+"""
+Module to test the Poderdante functionality of the Sunarp service.
+"""
+
+import pytest
+
+from sunarp_service.modules.builders.poderdante_builder import PoderdanteBuilder
+
+
+@pytest.mark.parametrize(
+    "numero_ruc, partida_registral, oficina_registral",
+    [
+        ("12345678901", "12345678", "LIMA"),
+    ],
+)
+def test_valid_poderdante_juridico(
+    numero_ruc, partida_registral, oficina_registral
+) -> None:
+
+    poderdante_juridico = PoderdanteBuilder.make_poderdante_juridico_from_dict(
+        {
+            "numero_ruc": numero_ruc,
+            "partida_registral": partida_registral,
+            "oficina_registral": oficina_registral,
+        },
+    )
+
+    print(poderdante_juridico)
+
+    assert poderdante_juridico.tipo_participante == "APODERADO"
+
+
+@pytest.mark.parametrize(
+    "nombre, documento, tipo_documento, nacionalidad, estado_civil, ocupacion",
+    [
+        (
+            "JANE DOE",
+            "12345678",
+            "DOCUMENTO NACIONAL DE IDENTIDAD",
+            "PERUANA",
+            "CASADA",
+            "DISEÑADORA",
+        ),
+    ],
+)
+def test_valid_peruvian_poderdante_natural(
+    nombre,
+    documento,
+    tipo_documento,
+    nacionalidad,
+    estado_civil,
+    ocupacion,
+) -> None:
+
+    poderdante_natural = PoderdanteBuilder.make_a_poderdante_natural_from_dict(
+        {
+            "nombre": nombre,
+            "documento": documento,
+            "tipo_documento": tipo_documento,
+            "nacionalidad": nacionalidad,
+            "estado_civil": estado_civil,
+            "ocupacion": ocupacion,
+        },
+    )
+
+    print(poderdante_natural)
+
+    assert poderdante_natural.pre_nombres == "-"
+    assert poderdante_natural.primer_apellido == "-"
+    assert poderdante_natural.segundo_apellido == "-"
+    assert poderdante_natural.tipo_participante == "PODERDANTE"
+
+
+@pytest.mark.parametrize(
+    "nombre, documento, tipo_documento, nacionalidad, estado_civil, ocupacion",
+    [
+        (
+            "JANE DOE",
+            "U1234567",
+            "PASAPORTE",
+            "AUSTRIACA",
+            "SOLTERA",
+            "AMA DE CASA",
+        ),
+    ],
+)
+def test_valid_foreign_poderdante_natural(
+    nombre,
+    documento,
+    tipo_documento,
+    nacionalidad,
+    estado_civil,
+    ocupacion,
+) -> None:
+
+    poderdante_natural = PoderdanteBuilder.make_a_poderdante_natural_from_dict(
+        {
+            "nombre": nombre,
+            "documento": documento,
+            "tipo_documento": tipo_documento,
+            "nacionalidad": nacionalidad,
+            "estado_civil": estado_civil,
+            "ocupacion": ocupacion,
+        },
+    )
+
+    print(poderdante_natural)
+
+    assert poderdante_natural.pre_nombres != "-"
+    assert poderdante_natural.primer_apellido != "-"
+    assert poderdante_natural.segundo_apellido != "-"
+    assert poderdante_natural.tipo_participante == "PODERDANTE"

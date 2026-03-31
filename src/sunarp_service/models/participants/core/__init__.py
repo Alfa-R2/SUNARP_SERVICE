@@ -1,0 +1,1 @@
+from .participante_natural import ParticipanteNatural

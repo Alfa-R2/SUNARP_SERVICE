@@ -1,0 +1,70 @@
+from pathlib import Path
+
+import pytest
+
+from sunarp_service.models.participants.participantes import (
+    Favorecido,
+    Otorgante,
+    ParticipanteJuridico,
+)
+from sunarp_service.models.types.solicitud import Solicitud
+
+
+@pytest.mark.parametrize(
+    "servicio, acto_registral, oficina_registral, parte_notarial, formulando_reserva, liquidacion, correo_ciudadano, participantes",
+    [
+        (
+            "Solicitud de Mandato y poder",
+            "OTORGAMIENTO DE PODER",
+            "LIMA",
+            "example_path_1.docx",
+            "",
+            "00.00",
+            "",
+            [
+                Otorgante(
+                    pre_nombres="-",
+                    primer_apellido="-",
+                    segundo_apellido="-",
+                    numero_documento="12345678",
+                    tipo_documento="DNI DOCUMENTO NACIONAL DE IDENTIDAD",
+                    tipo_participante="PODERDANTE",
+                    nacionalidad="PERUANA",
+                    estado_civil="CASADO(A)",
+                    ocupacion="DISEÑADOR",
+                ),
+                Favorecido(
+                    pre_nombres="-",
+                    primer_apellido="-",
+                    segundo_apellido="-",
+                    numero_documento="12345678",
+                    tipo_documento="DNI DOCUMENTO NACIONAL DE IDENTIDAD",
+                    tipo_participante="APODERADO",
+                ),
+            ],
+        ),
+    ],
+)
+def test_valid_solicitud(
+    servicio,
+    acto_registral,
+    oficina_registral,
+    parte_notarial,
+    formulando_reserva,
+    liquidacion,
+    correo_ciudadano,
+    participantes,
+) -> None:
+
+    solicitud = Solicitud(
+        servicio=servicio,
+        acto_registral=acto_registral,
+        oficina_registral=oficina_registral,
+        parte_notarial=Path(parte_notarial),
+        formulando_reserva=formulando_reserva,
+        liquidacion=liquidacion,
+        correo_ciudadano=correo_ciudadano,
+        participantes=participantes,
+    )
+
+    print(solicitud)
