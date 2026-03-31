@@ -166,7 +166,9 @@ class GetData:
             pago_anchor.click()
 
         recibo_page: Page = recibo_page_info.value
-
+        page.wait_for_timeout(
+            1000
+        )  # NOTE: Wait for the pdf to load, otherwise the download may be empty.
         try:
             recibo_page.pdf(path=save_path)
             return save_path
