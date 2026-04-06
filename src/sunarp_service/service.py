@@ -70,20 +70,10 @@ class SunarpNotario:
         """
         Redirect to the SUNARP Notarios Titulos Enviados a la Sunarp page and returns it.
         """
-        titulos_enviados_page = self.browser_ctx.new_page()
-        titulos_enviados_page.goto(self.TITULOS_ENVIADOS_URL, wait_until="networkidle")
-
-        titulos_enviados_page.wait_for_load_state(state="networkidle")
-        return SunarpTitulosEnviados(titulos_enviados_page)
+        return SunarpTitulosEnviados(self.browser_ctx, self.TITULOS_ENVIADOS_URL)
 
     def go_to_titulos_observados(self) -> SunarpTitulosObservados:
         """
         Redirect to the SUNARP Notarios Titulos Observados page and returns it.
         """
-        titulos_observados_page = self.browser_ctx.new_page()
-        titulos_observados_page.goto(
-            self.TITULOS_OBSERVADOS_URL, wait_until="networkidle"
-        )
-
-        titulos_observados_page.wait_for_load_state(state="networkidle")
-        return SunarpTitulosObservados(titulos_observados_page)
+        return SunarpTitulosObservados(self.browser_ctx, self.TITULOS_OBSERVADOS_URL)

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from patchright.sync_api import ElementHandle, Locator, Page
+from patchright.sync_api import BrowserContext, ElementHandle, Locator, Page
 
 from sunarp_service.titulos_enviados.application.get_sunarp_result import (
     GetSunarpResult,
@@ -13,8 +13,12 @@ class SunarpTitulosEnviados:
     A class to interact with the SUNARP Notarios Titulos Enviados a la Sunarp page.
     """
 
-    def __init__(self, page: Page):
-        self.page_titulos_enviados = page
+    def __init__(self, browser_ctx: BrowserContext, url_page: str) -> None:
+        ingreso_solicitud_page = browser_ctx.new_page()
+        ingreso_solicitud_page.goto(url_page, wait_until="networkidle")
+        ingreso_solicitud_page.wait_for_load_state(state="networkidle")
+
+        self.page_titulos_enviados = ingreso_solicitud_page
 
     def __enter__(self) -> "SunarpTitulosEnviados":
         return self

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from patchright.sync_api import Locator, Page
+from patchright.sync_api import BrowserContext, Locator
 
 from sunarp_service.titulos_enviados.application.get_sunarp_result import (
     GetSunarpResult,
@@ -13,8 +13,13 @@ class SunarpTitulosObservados:
     A class to interact with the SUNARP Notarios Titulos Observados page.
     """
 
-    def __init__(self, page: Page):
-        self.page_titulos_observados = page
+    def __init__(self, browser_ctx: BrowserContext, url_page: str) -> None:
+        titulos_observados_page = browser_ctx.new_page()
+        titulos_observados_page.goto(url_page, wait_until="networkidle")
+
+        titulos_observados_page.wait_for_load_state(state="networkidle")
+
+        self.page_titulos_observados = titulos_observados_page
 
     def __enter__(self) -> "SunarpTitulosObservados":
         return self
